@@ -170,13 +170,13 @@ MonoBehaviour:
   radius: 0.1
   dragCoefficient: 0.47
   airDensity: 1.225
-  wind: {x: 0, y: 0, z: 2}
+  wind: {x: 4, y: 1, z: 1}
   zapustikPoint: {fileID: 2004246629}
   shootRound: {fileID: 865836408}
   muzzleVelocity: 20
   muzleAngle: 20
   massRange: {x: 0.5, y: 3}
-  radiusRange: {x: 0.1, y: 0.35}
+  radiusRange: {x: 0.2, y: 0.4}
   moveSpeed: 5
   yawSpeed: 90
   cannonRoot: {fileID: 1191734442}
@@ -343,7 +343,7 @@ MonoBehaviour:
   targetPrefab: {fileID: 489664621080713932, guid: 43a560d125f60284094af6b4bb2fe939, type: 3}
   spawnInterval: 2
   massRange: {x: 0.5, y: 5}
-  radiusRange: {x: 0.1, y: 0.5}
+  radiusRange: {x: 0.3, y: 0.8}
   speedRange: {x: 2, y: 6}
   spawnBox: {x: 10, y: 3, z: 10}
 --- !u!4 &316997646
