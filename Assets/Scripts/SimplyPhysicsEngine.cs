@@ -6,9 +6,11 @@ namespace Group_9
     [RequireComponent(typeof(ForceVisuliizers))]
     public class SimplyPhysicsEngine : MonoBehaviour
     {
-        [SerializeField] private float mass;
-        [SerializeField] private bool isGravity;
-        [SerializeField] private Vector3 windForce;
+        [Header("Физические параметры")]
+        [SerializeField] private float _mass;
+        [SerializeField] private bool _isGravity;
+        [SerializeField] private float _dragCoeficient = 0.1f;
+        [SerializeField] private Vector3 _windForce;
 
 
         private ForceVisuliizers _forceVisualizers;
@@ -28,17 +30,17 @@ namespace Group_9
             _netForce = Vector3.zero;
             _forceVisualizers.ForceClear();
 
-            if (isGravity)
+            if (_isGravity)
             {
-                Vector3 grtavity = Physics.gravity * mass;
+                Vector3 grtavity = Physics.gravity * _mass;
                 ApplyForce(grtavity, Color.cyan, name: "Gravity");
             }
 
 
-            ApplyForce(windForce, Color.blue, name: "WindForce");
+            ApplyForce(_windForce, Color.blue, name: "WindForce");
 
 
-            Vector3 acceleration = _netForce / mass;
+            Vector3 acceleration = _netForce / _mass;
             IntegrateMotion(acceleration);
 
 

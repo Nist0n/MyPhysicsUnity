@@ -7,11 +7,14 @@ public class QuadrotorController : MonoBehaviour
 
 
     [Header("Physics Parametrs")]
-    [SerializeField] private float mass = 1.5f;
-    [SerializeField] private float maxThrottle = 30f;
+    [SerializeField] private float _mass = 1.5f;
+    [SerializeField] private float _maxThrottle = 30f;
+    [SerializeField] private float _maxTorque = 5f;
 
-    [SerializeField] private float maxPitchDeg = 20f;
-    [SerializeField] private float maxRollDeg = 20f;
+    [SerializeField] private float _maxPitchDeg = 20f;
+    [SerializeField] private float _maxYamDeg = 20f;
+    [SerializeField] private float _yawDegPerSec = 90f;
+    [SerializeField] private float _maxRollDeg = 20f;
 
     private Rigidbody _rigidbody;
     private float _desiredYawDeg;
@@ -19,7 +22,7 @@ public class QuadrotorController : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.mass = Mathf.Max(0.01f, mass);
+        _rigidbody.mass = Mathf.Max(0.01f, _mass);
 
         _desiredYawDeg = transform.eulerAngles.y;
     }
@@ -36,8 +39,8 @@ public class QuadrotorController : MonoBehaviour
 
         float throttleInput = Keyboard.current.spaceKey.wasPressedThisFrame ? 1f : 0f;
 
-        float targetPitch = pitchInput * maxPitchDeg;
-        float targetRoll = -rollInput * maxRollDeg;
+        float targetPitch = pitchInput * _maxPitchDeg;
+        float targetRoll = -rollInput * _maxRollDeg;
 
         float targetyawDeg = _desiredYawDeg;
 
@@ -66,8 +69,8 @@ public class QuadrotorController : MonoBehaviour
         float g = Physics.gravity.magnitude;
         float hover = g * _rigidbody.mass;
 
-        float comander = Mathf.Lerp(hover - 0.5f * maxThrottle, hover + 0.5f * maxThrottle, throttleInput);
-        float totalThrottle = Mathf.Clamp(comander, 0, maxThrottle);
+        float comander = Mathf.Lerp(hover - 0.5f * _maxThrottle, hover + 0.5f * _maxThrottle, throttleInput);
+        float totalThrottle = Mathf.Clamp(comander, 0, _maxThrottle);
 
         _rigidbody.AddForce(transform.up * totalThrottle, ForceMode.Force);
 
