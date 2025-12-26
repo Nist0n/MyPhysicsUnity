@@ -57,8 +57,6 @@ namespace Car
         {
             if (!_rb) return;
             
-            // Подвеска работает только если включено через KartController
-            // Проверяем, активен ли компонент
             if (!enabled) return;
 
             FrontLeftData = CalculateSuspension(frontLeftWheel, 0);
@@ -100,12 +98,10 @@ namespace Car
             float hitDistance = hit.distance;
             data.hitDistance = hitDistance;
 
-            // Вычисляем сжатие подвески
             float currentLength = hitDistance - wheelRadius;
             float compression = restLength - currentLength;
             compression = Mathf.Clamp(compression, -springTravel, springTravel);
             
-            // Плавное нарастание сжатия для предотвращения резких скачков
             if (wheelIndex >= 0 && wheelIndex < 4)
             {
                 float lastComp = _lastCompression[wheelIndex];
@@ -122,10 +118,7 @@ namespace Car
             }
             
             data.compression = compression;
-
-            // Сила пружины по закону Гука: F = k * x
             
-            // Целевое сжатие для состояния покоя (компенсирует вес автомобиля)
             float weightPerWheel = _rb.mass * Physics.gravity.magnitude * 0.25f;
             float targetCompression = weightPerWheel / springStiffness;
             targetCompression = Mathf.Clamp(targetCompression, 0f, springTravel * 0.5f);
@@ -140,8 +133,7 @@ namespace Car
             
             Vector3 wheelVelocity = _rb.GetPointVelocity(wheelPosition);
             float compressionVelocity = Vector3.Dot(wheelVelocity, suspensionDirection);
-
-            // Сила амортизатора: F = -c * v (замедляет движение, всегда против скорости)
+            
             float damperForce = -damperStiffness * compressionVelocity;
             data.damperForce = damperForce;
             
